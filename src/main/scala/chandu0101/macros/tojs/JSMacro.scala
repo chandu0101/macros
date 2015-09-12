@@ -5,7 +5,9 @@ import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.Context
 import scala.scalajs.js
 
-
+/**
+ * modified version of https://github.com/wav/scala-macros/blob/master/src/main/scala/wav/common/scalajs/macros/Macros.scala
+ */
 object JSMacro {
   val REGULAR = "regular"
 
