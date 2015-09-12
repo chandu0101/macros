@@ -11,8 +11,6 @@ object JSMacro {
 
   val UNDEFS = "undefs"
 
-  var debug: Boolean = false
-
   type TOJS = {
     val toJS: js.Object
   }
@@ -87,7 +85,6 @@ object JSMacro {
           import scalajs.js.JSConverters._
           val p = scala.scalajs.js.Dynamic.literal(..$params)
             ..$undefs
-          if($debug) scala.scalajs.js.Dynamic.global.console.debug(${tpe.typeSymbol.fullName}, p)
            p
         }
        """
