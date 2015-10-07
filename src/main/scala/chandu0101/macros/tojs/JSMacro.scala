@@ -29,9 +29,17 @@ object JSMacro {
     def isNotPrimitiveAnyVal(tpe: Type) = {
       !tpe.typeSymbol.fullName.startsWith("scala.")
     }
+
+    def customName(sym: c.Symbol): Option[String] = {
+      sym.annotations
+        .find(_.tree.tpe == typeOf[rename])
+        .flatMap(_.tree.children.tail.headOption)
+        .map{case Literal(Constant(s)) => s.toString}
+    }
+
     val rawParams = fields.map { field =>
       val name = field.asTerm.name
-      val decoded = name.decodedName.toString
+      val decoded = customName(field).getOrElse(name.decodedName.toString)
       val symToJs = typeOf[TOJS].typeSymbol
       val returnType = field.typeSignature
       def getJSValueTree(returnType: Type, undef: Boolean = false) = {
@@ -78,6 +86,8 @@ object JSMacro {
 
 
     def getTrees(key: String) = rawParams.filter(_._1 == key).map(_._2)
+
+
 
     val params = getTrees(REGULAR)
     val undefs = getTrees(UNDEFS)

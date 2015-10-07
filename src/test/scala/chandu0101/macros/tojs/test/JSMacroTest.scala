@@ -1,6 +1,6 @@
 package chandu0101.macros.tojs.test
 
-import chandu0101.macros.tojs.JSMacro
+import chandu0101.macros.tojs.{rename, JSMacro}
 import org.scalatest.FunSuite
 
 import scala.scalajs.js
@@ -26,6 +26,8 @@ object SeedType {
 case class AnyValTest(st: SeedType = SeedType.RICE)
 
 case class Plain(name: String, category: String, peracre: js.UndefOr[Int] = js.undefined, address: Address = null)
+
+case class PlainKeys(@rename("custom_name") name: String, category: String, peracre: js.UndefOr[Int] = js.undefined, address: Address = null)
 
 
 case class SeqTest(s: Seq[String] = Seq("dude"), as: Seq[Address] = Seq(Address("India"), null))
@@ -70,6 +72,13 @@ class JSMacroTest[T <: SelectOption] extends FunSuite {
   test("simple fields test") {
     val plain = JSMacro[Plain](Plain("bpt", "rice")).asInstanceOf[js.Dynamic]
     assert(plain.name.toString == "bpt")
+    assert(plain.category.toString == "rice")
+    assert(!plain.asInstanceOf[js.Object].hasOwnProperty("peracre"))
+  }
+
+  test("simple fields test with custom field names") {
+    val plain = JSMacro[PlainKeys](PlainKeys("bpt", "rice")).asInstanceOf[js.Dynamic]
+    assert(plain.custom_name.toString == "bpt")
     assert(plain.category.toString == "rice")
     assert(!plain.asInstanceOf[js.Object].hasOwnProperty("peracre"))
   }

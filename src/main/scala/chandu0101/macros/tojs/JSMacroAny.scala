@@ -6,7 +6,7 @@ import scala.reflect.macros.blackbox.Context
 import scala.scalajs.js
 
 /**
- *  when using this make sure all your callbacks/functions are js.Function
+ * when using this make sure all your callbacks/functions are js.Function
  */
 object JSMacroAny {
   val REGULAR = "regular"
@@ -29,9 +29,17 @@ object JSMacroAny {
     def isNotPrimitiveAnyVal(tpe: Type) = {
       !tpe.typeSymbol.fullName.startsWith("scala.")
     }
+
+    def customName(sym: c.Symbol): Option[String] = {
+      sym.annotations
+        .find(_.tree.tpe == typeOf[rename])
+        .flatMap(_.tree.children.tail.headOption)
+        .map { case Literal(Constant(s)) => s.toString}
+    }
+
     val rawParams = fields.map { field =>
       val name = field.asTerm.name
-      val decoded = name.decodedName.toString
+      val decoded = customName(field).getOrElse(name.decodedName.toString)
       val symToJs = typeOf[TOJS].typeSymbol
       val returnType = field.typeSignature
       def getJSValueTree(returnType: Type, undef: Boolean = false) = {

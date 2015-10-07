@@ -21,6 +21,13 @@ class JSMacroAnyTest extends FunSuite {
     assert(!plain.asInstanceOf[js.Object].hasOwnProperty("peracre"))
   }
 
+  test("simple fields test with custom field names") {
+    val plain = JSMacroAny[PlainKeys](PlainKeys("bpt", "rice")).asInstanceOf[js.Dynamic]
+    assert(plain.custom_name.toString == "bpt")
+    assert(plain.category.toString == "rice")
+    assert(!plain.asInstanceOf[js.Object].hasOwnProperty("peracre"))
+  }
+
   test("should handle seq") {
     val result = JSMacroAny[SeqTest](SeqTest()).asInstanceOf[js.Dynamic]
     println(s"result array ${JSON.stringify(result)}")
