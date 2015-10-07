@@ -10,13 +10,13 @@ Example :
 
 ```scala
 
- case class Test(x: String,y: Int) {
+ case class Test(x: String,@rename("y1") y: Int) {
    def toJS = JSMacro[Test](this)
  }
  
  val t = Test("hello",5)
  
  > t.toJS
- { x : "hello", y : 5}
+ { x : "hello", y1 : 5}
 
 ```
