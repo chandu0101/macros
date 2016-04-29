@@ -8,9 +8,9 @@ version := "0.5.2-SNAPSHOT"
 
 organization := "com.github.chandu0101"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
-val scalatestVersion = "3.0.0-M6"
+val scalatestVersion = "3.0.0-M15"
 
 libraryDependencies +=   "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided
 
