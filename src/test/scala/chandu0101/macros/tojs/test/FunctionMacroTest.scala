@@ -1,6 +1,6 @@
 package chandu0101.macros.tojs.test
 
-import chandu0101.macros.tojs.{rename, FunctionMacro}
+import chandu0101.macros.tojs.{exclude, rename, FunctionMacro}
 import org.scalatest.FunSuite
 
 import scala.scalajs.js
@@ -9,7 +9,7 @@ import scala.scalajs.js.JSON
 
 class FunctionMacroTest extends FunSuite {
 
-  def Plain(name: String, category: String, peracre: js.UndefOr[Int] = js.undefined, address: Address = null): js.Object = {
+  def Plain(name: String, category: String,  peracre: js.UndefOr[Int] = js.undefined, address: Address = null): js.Object = {
     val p = FunctionMacro()
     p
   }
@@ -63,6 +63,11 @@ class FunctionMacroTest extends FunSuite {
    val p = FunctionMacro()
    p
  }
+
+  def ExcludeTest(name : String= "Hello",@exclude age : Int = 1) : js.Object = {
+    val p = FunctionMacro()
+    p
+  }
 
   def printResult(result: js.Any) = {
     println(s"Result is : ${JSON.stringify(result)}")
@@ -133,6 +138,12 @@ class FunctionMacroTest extends FunSuite {
     test("should work with custom traits") {
       val result = TPTest(js.Array(SampleOption()))
       printResult(result)
+    }
+
+   test("should not include excluded fields") {
+      val result = ExcludeTest().asInstanceOf[js.Dynamic]
+      assert(result.name.toString == "Hello")
+      assert(js.isUndefined(result.age))
     }
 
 

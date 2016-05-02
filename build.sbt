@@ -4,7 +4,7 @@ enablePlugins(ScalaJSPlugin)
 
 name := "macros"
 
-version := "0.5.2-SNAPSHOT"
+version := "2016.5.0"
 
 organization := "com.github.chandu0101"
 

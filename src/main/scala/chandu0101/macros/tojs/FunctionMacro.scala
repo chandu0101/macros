@@ -48,8 +48,8 @@ object FunctionMacro {
 
 
     val finalTerm = TermName(c.freshName())
-
-    val rawParams = p.head.map { field =>
+    val x = p.head
+    val rawParams = p.head.filterNot(s => s.annotations.exists(a => a.tree.tpe == typeOf[exclude])).map { field =>
       val name = field.asTerm.name
       val decoded = customName(field).getOrElse(name.decodedName.toString)
       val symToJs = typeOf[TOJS].typeSymbol

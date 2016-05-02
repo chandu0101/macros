@@ -7,3 +7,8 @@ import scala.annotation.StaticAnnotation
  * @param name
  */
 class rename(name : String) extends StaticAnnotation
+
+/**
+ *  fields with this annotation will be excluded from final json object
+ */
+class exclude extends StaticAnnotation

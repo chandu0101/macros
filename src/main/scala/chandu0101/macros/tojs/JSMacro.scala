@@ -37,7 +37,7 @@ object JSMacro {
         .map{case Literal(Constant(s)) => s.toString}
     }
 
-    val rawParams = fields.map { field =>
+    val rawParams = fields.filterNot(s => s.annotations.exists(a => a.tree.tpe == typeOf[exclude])).map { field =>
       val name = field.asTerm.name
       val decoded = customName(field).getOrElse(name.decodedName.toString)
       val symToJs = typeOf[TOJS].typeSymbol
