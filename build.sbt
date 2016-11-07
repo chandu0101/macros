@@ -4,13 +4,16 @@ enablePlugins(ScalaJSPlugin)
 
 name := "macros"
 
-version := "2016.5.0"
+version := "2016.11.0"
 
 organization := "com.github.chandu0101"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.0"
 
-val scalatestVersion = "3.0.0-M15"
+crossScalaVersions := Seq("2.11.8","2.12.0")
+
+
+val scalatestVersion = "3.0.0"
 
 libraryDependencies +=   "org.scala-lang" % "scala-reflect" % scalaVersion.value % Provided
 

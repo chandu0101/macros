@@ -3,7 +3,7 @@
 A few helper macros 
 
 ```scala
-libraryDependencies += "com.github.chandu0101" %%% "macros" % "2016.5.0"
+libraryDependencies += "com.github.chandu0101" %%% "macros" % "2016.11.0"
 ```
 
 # JSMacro :
